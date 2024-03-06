@@ -1,3 +1,5 @@
+import { logarTempoDeExcecucao } from '../decorators/logar-tempo-de-execucao.js';
+
 export abstract class View<T> {
     protected elemento: HTMLElement
     private escapar = false;
@@ -15,6 +17,7 @@ export abstract class View<T> {
         }
     }
 
+    @logarTempoDeExcecucao()
     public update(model: T): void {
         let template = this.template(model);
 
