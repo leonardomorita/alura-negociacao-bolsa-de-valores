@@ -9,7 +9,7 @@ export function escapar(
         let retorno = metodoOriginal.apply(this, args);
 
         if (typeof retorno === 'string') {
-            console.log(`Decorator '${escapar.name}' em ação na classe ${this.constructor.name} para o método ${propertyKey}`);
+            // console.log(`Decorator '${escapar.name}' em ação na classe ${this.constructor.name} para o método ${propertyKey}`);
 
             retorno = retorno.replace(/<script>[\s\S/]*?<\/script>/, ''); // Remover a tag script
         }
