@@ -11,3 +11,13 @@ if (form) {
 } else {
     throw Error('Não foi possível carregar o elemento do formulário.');
 }
+
+const botaoImporta = document.querySelector('#botao-importa');
+
+if (botaoImporta) {
+    botaoImporta.addEventListener('click', () => {
+        negociacaoController.importarDados();
+    });
+} else {
+    throw Error('Não foi possível carregar o botão importar.');
+}
