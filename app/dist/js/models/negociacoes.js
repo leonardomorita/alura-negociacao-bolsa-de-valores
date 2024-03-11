@@ -8,4 +8,7 @@ export class Negociacoes {
     listar() {
         return this.negociacoes;
     }
+    paraTexto() {
+        return JSON.stringify(this.negociacoes, null, 2);
+    }
 }

@@ -11,6 +11,7 @@ import { DiasDaSemana } from '../enums/dias-da-semana.js';
 import { Negociacao } from '../models/negociacao.js';
 import { Negociacoes } from '../models/negociacoes.js';
 import { NegociacoesServices } from '../services/negociacoes-service.js';
+import { imprimir } from '../utils/imprimir.js';
 import { MensagemView } from '../views/mensagem-view.js';
 import { NegociacoesView } from '../views/negociacoes-view.js';
 export class NegociacaoController {
@@ -30,17 +31,25 @@ export class NegociacaoController {
         this.negociacoes.adicionar(negociacao);
         this.negociacoesView.update(this.negociacoes);
         this.mensagemView.update('A negociação foi adicionada com sucesso');
+        imprimir(negociacao, this.negociacoes);
         this.limparFormulario();
     }
     importarDados() {
         this.negociacoesService
             .obterNegociacoesDoDia()
-            .then((negociacoesDoDia => {
+            .then(negociacoesDeHoje => {
+            return negociacoesDeHoje.filter(negociacaoDeHoje => {
+                return !this.negociacoes
+                    .listar()
+                    .some(negociacao => negociacao.ehIgual(negociacaoDeHoje));
+            });
+        })
+            .then(negociacoesDoDia => {
             for (let negociacao of negociacoesDoDia) {
                 this.negociacoes.adicionar(negociacao);
             }
             this.negociacoesView.update(this.negociacoes);
-        }));
+        });
     }
     ehDiaUtil(data) {
         return data.getDay() > DiasDaSemana.DOMINGO && data.getDay() < DiasDaSemana.SABADO;
